@@ -1,0 +1,16 @@
+{
+  "name": "orderapi",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Khun LY",
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node --env-file=.env ."
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.3.0"
+  }
+}
