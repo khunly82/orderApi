@@ -1,7 +1,21 @@
 import express, { json } from 'express';
 import mongoose from 'mongoose';
+import promBundle from 'express-prom-bundle';
+
+const metricsMiddleware = promBundle({
+ includeMethod: true, 
+ includePath: true, 
+ includeStatusCode: true, 
+ includeUp: true,
+ promClient: {
+    collectDefaultMetrics: {
+    }
+ }
+});
 
 const app = express();
+
+app.use(metricsMiddleware);
 
 mongoose.connect(process.env.MONGO_URI);
 
@@ -19,5 +33,9 @@ app.post('/order', async (req, res) => {
     await model.create({ ...req.body, date: new Date() });
     res.sendStatus(200);
 });
+
+app.get('/order', async (req, res) => {
+    res.send(await model.find());
+})
 
 app.listen(3000, () => console.log('server is running and is listening port 3000'))
